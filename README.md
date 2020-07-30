@@ -9,3 +9,9 @@ Under development...
 ### Development history
 
 *7/30/2020 Consensus_Cluster_Analysis: an toolkit focus on sample-based subtyping by using consensus clustering result of multi-clustering algorithms.
+
+### Install package
+
+install.packages("devtools")
+devtools::install_github("https://github.com/FanqianYin/omicstoolkits")
+
