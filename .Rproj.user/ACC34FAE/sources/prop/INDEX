@@ -1,6 +1,9 @@
 D%3A%2FR_functions%2FMulti_clustering%20Analysis.R="B457C709"
 D%3A%2FRpackages%2Fomicstoolkits%2F.Rbuildignore="3D1F3663"
 D%3A%2FRpackages%2Fomicstoolkits%2F.gitignore="DCAA0671"
+<<<<<<< HEAD
 D%3A%2FRpackages%2Fomicstoolkits%2FDESCRIPTION="B8430A4"
+=======
+>>>>>>> 562fb82c762b2e8d5168a455c8979df1da777e4f
 D%3A%2FRpackages%2Fomicstoolkits%2FR%2Fnumber_clusters.R="B58AE0E5"
 D%3A%2FRpackages%2Fomicstoolkits%2FREADME.md="16A78548"

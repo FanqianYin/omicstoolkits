@@ -1,5 +1,8 @@
 D:/Rpackages/omicstoolkits/.Rbuildignore="293E56FB"
 D:/Rpackages/omicstoolkits/.gitignore="98CDEA5A"
+<<<<<<< HEAD
 D:/Rpackages/omicstoolkits/DESCRIPTION="7189B97D"
+=======
+>>>>>>> 562fb82c762b2e8d5168a455c8979df1da777e4f
 D:/Rpackages/omicstoolkits/R/number_clusters.R="7A3E4671"
 D:/Rpackages/omicstoolkits/README.md="F8BC4EAE"
