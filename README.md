@@ -12,6 +12,6 @@ Under development...
 
 ### Install package
 
-install.packages("devtools")
+install.packages("devtools")\n
 devtools::install_github("FanqianYin/omicstoolkits")
 
