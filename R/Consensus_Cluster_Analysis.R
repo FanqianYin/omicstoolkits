@@ -20,7 +20,9 @@
 #'
 #' @examples
 #' consensus_clusters <- Consensus_Cluster_Analysis(iris[-5], 3, methods = "ALL")
-#' plot_consensus_clusters(consensus_clusters)
+#' #plot result:
+#' plot_consensus_clusters.heatmap(consensus_clusters)
+#' plot_consensus_clusters.pca(consensus_clusters)
 #'
 #' consensus_clusters <- Consensus_Cluster_Analysis(iris[-5], 3, methods = c("kmeans", "pam"))
 #'
