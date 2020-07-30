@@ -20,7 +20,9 @@
 #'
 #' @examples
 #' consensus_clusters <- Consensus_Cluster_Analysis(iris[-5], 3, methods = "ALL")
-#' plot_consensus_clusters(consensus_clusters)
+#' #plot result:
+#' plot_consensus_clusters.heatmap(consensus_clusters)
+#' plot_consensus_clusters.pca(consensus_clusters)
 #'
 #' consensus_clusters <- Consensus_Cluster_Analysis(iris[-5], 3, methods = c("kmeans", "pam"))
 #'
@@ -63,11 +65,11 @@ Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "e
 
   #All result
   consensus_clusters <- list("consensus_cluster" = NULL,
-                             "Hierarchical Clustering" = list("res_hc_ward.D" = res_hc_ward.D, "res_hc_ward.D2" = res_hc_ward.D2, "res_hc_complete" = res_hc_complete,
-                                                              "res_hc_single" = res_hc_single, "res_hc_average" = res_hc_average,
-                                                              "res_hc_mcquitty" = res_hc_mcquitty, "res_hc_median" = res_hc_median,
-                                                              "res_hc_centroid" = res_hc_centroid, "res_hc_diana" = res_hc_diana),
-                             "Partitioning clustering" = list("res_kmeans" = res_kmeans, "res_pam" = res_pam, "res_fanny" = res_fanny, "res_hkmeans" = res_hkmeans),
+                             "Hierarchical Clustering" = list("hc_ward.D" = res_hc_ward.D, "hc_ward.D2" = res_hc_ward.D2, "hc_complete" = res_hc_complete,
+                                                              "hc_single" = res_hc_single, "hc_average" = res_hc_average,
+                                                              "hc_mcquitty" = res_hc_mcquitty, "hc_median" = res_hc_median,
+                                                              "hc_centroid" = res_hc_centroid, "hc_diana" = res_hc_diana),
+                             "Partitioning clustering" = list("kmeans" = res_kmeans, "pam" = res_pam, "fanny" = res_fanny, "hkmeans" = res_hkmeans),
                              "Other clustering" = list("Mclust" = res_mc),
                              "ConsensusClusterPlus" = list("con_kmeans" = res_con_kmeans, "con_pam" = res_con_pam, "con_hc_ward.D2" = res_con_hc_ward.D2,
                                                            "con_hc_complete" = res_con_hc_complete, "con_hc_average" = res_con_hc_average))
@@ -81,10 +83,10 @@ Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "e
                                "hc_median" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_median"]][["cluster"]],
                                "hc_centroid" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_centroid"]][["cluster"]],
                                "hc_diana" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_diana"]][["cluster"]],
-                               "res_kmeans" = consensus_clusters[["Partitioning clustering"]][["res_kmeans"]][["cluster"]],
-                               "res_pam" = consensus_clusters[["Partitioning clustering"]][["res_pam"]][["clustering"]],
-                               "res_fanny" = consensus_clusters[["Partitioning clustering"]][["res_fanny"]][["clustering"]],
-                               "res_hkmeans" = consensus_clusters[["Partitioning clustering"]][["res_hkmeans"]][["cluster"]],
+                               "kmeans" = consensus_clusters[["Partitioning clustering"]][["res_kmeans"]][["cluster"]],
+                               "pam" = consensus_clusters[["Partitioning clustering"]][["res_pam"]][["clustering"]],
+                               "fanny" = consensus_clusters[["Partitioning clustering"]][["res_fanny"]][["clustering"]],
+                               "hkmeans" = consensus_clusters[["Partitioning clustering"]][["res_hkmeans"]][["cluster"]],
                                "Mclust" = consensus_clusters[["Other clustering"]][["Mclust"]][["classification"]],
                                "con_kmeans" = consensus_clusters[["ConsensusClusterPlus"]][["con_kmeans"]][[k]][["consensusClass"]],
                                "con_pam" = consensus_clusters[["ConsensusClusterPlus"]][["con_pam"]][[k]][["consensusClass"]],

@@ -5,13 +5,24 @@ This is an integrated toolkits focusing on data analysis of omics data like tran
 
 Under development...
 
+## Under development
 
-### Development history
+1.Consensus differential expression analysis
+2.Network analysis
+3.Regression analysis
+4.Time serie anaylsis
+5.
+
+## Development history
 
 *7/30/2020 Consensus_Cluster_Analysis: an toolkit focus on sample-based subtyping by using consensus clustering result of multi-clustering algorithms.
 
-### Install package
+## Install package
 
-install.packages("devtools")\n
+install.packages("devtools")
+
 devtools::install_github("FanqianYin/omicstoolkits")
 
+## Contact
+
+If you encounter any problem, don't hesitat to cantact me: fanqianyin@gmail.com.

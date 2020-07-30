@@ -13,7 +13,7 @@
 #' @examples
 #' cluster_number(iris[-5], 5, kmeans)
 #'
-#' @seealso \code{\link[cluster]{fviz_nbclust}}
+#' @seealso \code{\link[factoextra]{fviz_nbclust}}
 #'
 #' @export
 
