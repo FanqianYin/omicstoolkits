@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1596068580994.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E86FD07D",
+    "lastKnownWriteTime" : 1596008052,
+    "last_content_update" : 1596008052,
+    "path" : "D:/R_functions/Multi_clustering Analysis.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "15,26",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
