@@ -16,6 +16,8 @@
 #' @export
 #'
 #' @examples
+#' cluster_number(iris[-5], 5, kmeans)
+#'
 
 
 
