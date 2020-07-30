@@ -24,4 +24,7 @@ Depends:
     tidyverse,
     factoextra,
     cluster,
-    mclust
+    mclust,
+    ConsensusClusterPlus,
+    dbscan,
+    ComplexHeatmap

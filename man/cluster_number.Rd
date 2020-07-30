@@ -13,7 +13,7 @@ cluster_number(
 )
 }
 \arguments{
-\item{Exp}{data.frame with rownames represent samples, colnames represent features like proteins or genes.}
+\item{Exp}{data.frame or matrix with rownames represent samples, colnames represent features like proteins or genes.}
 
 \item{k.max}{maximum numbers of cluster.}
 
