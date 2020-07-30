@@ -10,11 +10,18 @@ Authors@R:
 Description: This is an integrated toolkits focusing on data analysis of omics data like transcriptomic, proteomic, metabolic and any other quantitative omics dataset.
              The upstream data could be any quantitative omics data in the future, like raw counts of transcriptomics or expression value from 
              For now, normalized expression value from omics are supported. (Expression matrix of gene, proteins, metabolites and so on.)
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a license
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 URL: https://github.com/FanqianYin/omicstoolkits
 BugReports: https://github.com/FanqianYin/omicstoolkits/issues
+Imports:
+    cowplot,
+Depends:
+    R (>= 4.0),
+    tidyverse,
+    factoextra,
+    cluster,
+    mclust

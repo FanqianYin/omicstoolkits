@@ -8,7 +8,8 @@ cluster_number(
   Exp,
   k.max,
   FUNcluster = c(kmeans, pam, clara, fanny, hcut),
-  scale = TRUE
+  scale = TRUE,
+  ...
 )
 }
 \arguments{
@@ -16,12 +17,14 @@ cluster_number(
 
 \item{k.max}{maximum numbers of cluster.}
 
-\item{FUNcluster}{Clustering method}
+\item{FUNcluster}{Clustering method. Type without quote mark. Chose one of following methods: kmean, pam, clara, fanny, hcut.}
 
 \item{scale}{Logical. whether input Exp should be scaled.}
+
+\item{...}{Any parameter passed to fviz_nbclust().}
 }
 \value{
-Two plots. Indicating number of clusters.
+Two plots. Indicating number of clusters by using Elbow method and Silhouette method.
 }
 \description{
 Produce one referenced number of clusters which determined by kmean/pam/clara/fanny/hcut clustering.
@@ -29,4 +32,7 @@ Produce one referenced number of clusters which determined by kmean/pam/clara/fa
 \examples{
 cluster_number(iris[-5], 5, kmeans)
 
+}
+\seealso{
+\code{\link[cluster]{fviz_nbclust}}
 }
