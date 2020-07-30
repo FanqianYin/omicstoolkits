@@ -1,7 +1,25 @@
 
 
-#number of clusters. Determined by kmean clustering.
-number_clusters <- function(Exp, k.max, FUNcluster = c(kmeans, pam, clara, fanny, hcut), scale = TRUE){
+
+
+
+#' cluster_number
+#'
+#' Produce one referenced number of clusters which determined by kmean/pam/clara/fanny/hcut clustering.
+#'
+#' @param Exp data.frame with rownames represent samples, colnames represent features like proteins or genes.
+#' @param k.max maximum numbers of cluster.
+#' @param FUNcluster Clustering method
+#' @param scale Logical. whether input Exp should be scaled.
+#'
+#' @return Two plots. Indicating number of clusters.
+#' @export
+#'
+#' @examples
+
+
+
+cluster_number <- function(Exp, k.max, FUNcluster = c(kmeans, pam, clara, fanny, hcut), scale = TRUE){
   d <- as.matrix(Exp)
   if (scale == TRUE) d <- scale(d)
   require(factoextra)
