@@ -1,6 +1,1 @@
-
-
-# History files
-.Rhistory
-
-.Rproj.user/
+.Rproj.user/**
