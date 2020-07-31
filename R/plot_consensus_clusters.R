@@ -10,14 +10,29 @@
 #' @example
 #' plot_consensus_clusters.heatmap(consensus_clusters)
 #'
-plot_consensus_clusters.heatmap <- function(consensus_clusters){
+plot_consensus_clusters.heatmap <- function(consensus_clusters, clustering_method_columns = "ward.D2", clustering_method_rows = "complete"){
   #consenesus cluster heatmap
-  Heatmap(consensus_clusters[["cluster_matrix"]], cluster_rows = T, cluster_columns = T, clustering_method_columns = "ward.D2",
-          clustering_method_rows = "average", name="clusters", row_title = "samples", column_title = "clutering algorithms",
-          row_split = consensus_clusters$k)+
-    rowAnnotation(df = data.frame("consensus_cluster" = as.character(consensus_clusters$consensus_cluster)))
-}
+  if (consensus_clusters$k <= 9) { #k <=9, use RColorBrewer::brewer.pal
+    Heatmap(consensus_clusters[["cluster_matrix"]],
+            col = structure(RColorBrewer::brewer.pal(n = consensus_clusters$k, name = "Set1"), names = as.character(1:consensus_clusters$k)),
+            cluster_rows = T, cluster_columns = T,
+            clustering_method_columns = clustering_method_columns,
+            clustering_method_rows = clustering_method_rows, name="clusters", row_title = "samples", column_title = "clutering algorithms",
+            row_split = consensus_clusters$k)+
+      Heatmap(as.character(consensus_clusters$consensus_cluster), col = structure(RColorBrewer::brewer.pal(n = consensus_clusters$k, name = "Set1"), names = as.character(1:consensus_clusters$k)))
+  }else {#k > 9, use random colors()
+    Heatmap(consensus_clusters[["cluster_matrix"]],
+            col = sample(colors(), consensus_clusters$k),
+            cluster_rows = T, cluster_columns = T,
+            clustering_distance_rows = "pearson", clustering_distance_columns = "pearson", clustering_method_columns = "ward.D2",
+            clustering_method_rows = "average", name="clusters", row_title = "samples", column_title = "clutering algorithms",
+            row_split = consensus_clusters$k)+
+      rowAnnotation(df = data.frame("consensus_cluster" = as.character(consensus_clusters$consensus_cluster)))
+  }
 
+}
+#rowAnnotation(df = data.frame("consensus_cluster" = as.character(consensus_clusters$consensus_cluster)), col = list(consensus_cluster = structure(RColorBrewer::brewer.pal(n = consensus_clusters$k, name = "Set1"), names = as.character(1:consensus_clusters$k))))
+#rowAnnotation(df = data.frame("consensus_cluster" = as.character(consensus_clusters$consensus_cluster)), col = list(consensus_cluster = structure(RColorBrewer::brewer.pal(n = consensus_clusters$k, name = "Set1"), names = as.character(1:consensus_clusters$k))))
 #' @rdname plot_consensus_clusters.pca
 #' @export
 #'

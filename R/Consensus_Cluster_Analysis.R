@@ -26,7 +26,7 @@
 #'
 #' consensus_clusters <- Consensus_Cluster_Analysis(iris[-5], 3, methods = c("kmeans", "pam"))
 #'
-Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "euclidean", methods.consensus = "average", scale = TRUE,
+Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "euclidean", methods.consensus = "complete", scale = TRUE,
                                        plot.cluster.pca = FALSE, saveplot = FALSE, plot.dir.suffix = NULL,
                                        ConsensusClusterPlus.reps = 100){
   #Prepare input data
@@ -74,19 +74,19 @@ Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "e
                              "ConsensusClusterPlus" = list("con_kmeans" = res_con_kmeans, "con_pam" = res_con_pam, "con_hc_ward.D2" = res_con_hc_ward.D2,
                                                            "con_hc_complete" = res_con_hc_complete, "con_hc_average" = res_con_hc_average))
   #cluster matrix
-  cluster_matrix <- data.frame("hc_ward.D" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_ward.D"]][["cluster"]],
-                               "hc_ward.D2" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_ward.D2"]][["cluster"]],
-                               "hc_complete" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_complete"]][["cluster"]],
-                               "hc_average" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_average"]][["cluster"]],
-                               "hc_single" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_single"]][["cluster"]],
-                               "hc_mcquitty" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_mcquitty"]][["cluster"]],
-                               "hc_median" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_median"]][["cluster"]],
-                               "hc_centroid" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_centroid"]][["cluster"]],
-                               "hc_diana" = consensus_clusters[["Hierarchical Clustering"]][["res_hc_diana"]][["cluster"]],
-                               "kmeans" = consensus_clusters[["Partitioning clustering"]][["res_kmeans"]][["cluster"]],
-                               "pam" = consensus_clusters[["Partitioning clustering"]][["res_pam"]][["clustering"]],
-                               "fanny" = consensus_clusters[["Partitioning clustering"]][["res_fanny"]][["clustering"]],
-                               "hkmeans" = consensus_clusters[["Partitioning clustering"]][["res_hkmeans"]][["cluster"]],
+  cluster_matrix <- data.frame("hc_ward.D" = consensus_clusters[["Hierarchical Clustering"]][["hc_ward.D"]][["cluster"]],
+                               "hc_ward.D2" = consensus_clusters[["Hierarchical Clustering"]][["hc_ward.D2"]][["cluster"]],
+                               "hc_complete" = consensus_clusters[["Hierarchical Clustering"]][["hc_complete"]][["cluster"]],
+                               "hc_average" = consensus_clusters[["Hierarchical Clustering"]][["hc_average"]][["cluster"]],
+                               "hc_single" = consensus_clusters[["Hierarchical Clustering"]][["hc_single"]][["cluster"]],
+                               "hc_mcquitty" = consensus_clusters[["Hierarchical Clustering"]][["hc_mcquitty"]][["cluster"]],
+                               "hc_median" = consensus_clusters[["Hierarchical Clustering"]][["hc_median"]][["cluster"]],
+                               "hc_centroid" = consensus_clusters[["Hierarchical Clustering"]][["hc_centroid"]][["cluster"]],
+                               "hc_diana" = consensus_clusters[["Hierarchical Clustering"]][["hc_diana"]][["cluster"]],
+                               "kmeans" = consensus_clusters[["Partitioning clustering"]][["kmeans"]][["cluster"]],
+                               "pam" = consensus_clusters[["Partitioning clustering"]][["pam"]][["clustering"]],
+                               "fanny" = consensus_clusters[["Partitioning clustering"]][["fanny"]][["clustering"]],
+                               "hkmeans" = consensus_clusters[["Partitioning clustering"]][["hkmeans"]][["cluster"]],
                                "Mclust" = consensus_clusters[["Other clustering"]][["Mclust"]][["classification"]],
                                "con_kmeans" = consensus_clusters[["ConsensusClusterPlus"]][["con_kmeans"]][[k]][["consensusClass"]],
                                "con_pam" = consensus_clusters[["ConsensusClusterPlus"]][["con_pam"]][[k]][["consensusClass"]],
