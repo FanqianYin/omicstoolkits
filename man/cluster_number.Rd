@@ -34,5 +34,5 @@ cluster_number(iris[-5], 5, kmeans)
 
 }
 \seealso{
-\code{\link[cluster]{fviz_nbclust}}
+\code{\link[factoextra]{fviz_nbclust}}
 }

@@ -9,7 +9,7 @@ Consensus_Cluster_Analysis(
   k,
   methods = "ALL",
   dist.method = "euclidean",
-  methods.consensus = "average",
+  methods.consensus = "complete",
   scale = TRUE,
   plot.cluster.pca = FALSE,
   saveplot = FALSE,

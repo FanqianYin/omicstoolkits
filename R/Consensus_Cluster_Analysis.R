@@ -110,3 +110,8 @@ clustering.methods <- list("Hierarchical Clustering" = c("hc_ward.D", "hc_ward.D
                            "Density-based clustering" = c("dbscan"),
                            "ConsensusClusterPlus" = c("con_kmeans", "con_pam", "con_hc_ward.D2", "con_hc_complete", "con_hc_average"))
 
+
+
+#Future dev
+#cluster funtion
+#fastcluster::hclust,

@@ -6,7 +6,11 @@
 \alias{plot_consensus_clusters.pca}
 \title{plot consensus result}
 \usage{
-plot_consensus_clusters.heatmap(consensus_clusters)
+plot_consensus_clusters.heatmap(
+  consensus_clusters,
+  clustering_method_columns = "ward.D2",
+  clustering_method_rows = "complete"
+)
 }
 \arguments{
 \item{consensus_clusters}{Result of Consensus_Cluster_Analysis().}

@@ -2,5 +2,7 @@
 
 export(Consensus_Cluster_Analysis)
 export(cluster_number)
+export(plot_cluster.pca)
+export(plot_cluster_algorithms.pca)
 export(plot_consensus_clusters.heatmap)
 export(plot_consensus_clusters.pca)
