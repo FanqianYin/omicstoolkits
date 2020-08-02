@@ -19,7 +19,8 @@ URL: https://github.com/FanqianYin/omicstoolkits
 BugReports: https://github.com/FanqianYin/omicstoolkits/issues
 Imports:
     cowplot,
-    RColorBrewer
+    RColorBrewer,
+    dendextend
 Depends:
     R (>= 4.0),
     tidyverse,

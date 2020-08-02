@@ -1,0 +1,27 @@
+---
+title: "Features_under_developing"
+author: "Fanqian Yin"
+date: "8/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Main toolkits to be developed
+
+1. Consensus differential expression analysis
+
+2. Network analysis
+
+3. Regression analysis
+
+4. Time serie anaylsis
+
+## Consensus differential expression analysis
+
+1. Support subset of clustering methods
+2. add more clustering algorithms
+3. clusters alignment (cluster label result from different methods are consistent).
+4. Complement of consensus cluster result, like dbscan...

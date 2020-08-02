@@ -12,7 +12,8 @@
 #' @param k number of clusters
 #' @param methods Charactor vector. Default "ALL" will perform all 20 clustering methods.
 #' @param dist.method Method for calculating dissimilarity. Default "euclidean", can be any methods supported by dist()
-#' @param consensus.method Method used for the final consensus cluster by hieraichical clustering. Default are set to "average".
+#' @param consensus.method Method used for the final consensus cluster by hieraichical clustering.
+#' Default are set to "average". Alternatively, "complete" may get a diferent view of result, which you should try. It Can be set as any method supported by hclust.
 #' @param scale Logical value, whether to scale your input data. Default: TRUE.
 #' @param ConsensusClusterPlus.reps Integer value, used by consensusClusterPlus.
 #' @param res.con result of \code{Consensus_Cluster_Analysis()}.
@@ -40,7 +41,7 @@ NULL
 
 #' @rdname Consensus_Cluster_Analysis
 #' @export
-Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "euclidean", consensus.method = "complete", scale = TRUE,
+Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "euclidean", consensus.method = "average", scale = TRUE,
                                        saveplot = FALSE, plot.dir.suffix = NULL,
                                        ConsensusClusterPlus.reps = 100){
   #Prepare input data
@@ -118,7 +119,8 @@ Consensus_Cluster_Analysis <- function(Exp, k, methods = "ALL", dist.method = "e
                                "con_hc_average" = res.con[["ConsensusClusterPlus"]][["con_hc_average"]][[k]][["consensusClass"]]
                                ) %>% as.matrix()
   #Consensus cluster result:
-  consensus_cluster <- dist(cluster_matrix) %>% hclust(method = consensus.method) %>% cutree(k)
+  res.con$consensus_result <- dist(cluster_matrix) %>% hclust(method = consensus.method)
+  consensus_cluster <- res.con$consensus_result %>% cutree(k)
   res.con$consensus_cluster <- consensus_cluster
   res.con$cluster_matrix <- cluster_matrix
   res.con$d <- d
@@ -142,8 +144,10 @@ clustering.methods <- function(){
 Consensus_Cluster_conMethod <- function(res.con, consensus.method){
   res.con[["par"]][["consensus.method"]] <- consensus.method
   #Consensus cluster result:
-  consensus_cluster <- dist(res.con$cluster_matrix) %>% hclust(method = consensus.method) %>% cutree(res.con$k)
+  res.con$consensus_result <- dist(res.con$cluster_matrix) %>% hclust(method = consensus.method)
+  consensus_cluster <- res.con$consensus_result %>% cutree(res.con$k)
   res.con$consensus_cluster <- consensus_cluster
+  return(res.con)
 }
 
 #Future dev

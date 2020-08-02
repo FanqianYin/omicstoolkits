@@ -11,7 +11,7 @@ Consensus_Cluster_Analysis(
   k,
   methods = "ALL",
   dist.method = "euclidean",
-  consensus.method = "complete",
+  consensus.method = "average",
   scale = TRUE,
   saveplot = FALSE,
   plot.dir.suffix = NULL,
@@ -31,7 +31,8 @@ Consensus_Cluster_conMethod(res.con, consensus.method)
 
 \item{dist.method}{Method for calculating dissimilarity. Default "euclidean", can be any methods supported by dist()}
 
-\item{consensus.method}{Method used for the final consensus cluster by hieraichical clustering. Default are set to "average".}
+\item{consensus.method}{Method used for the final consensus cluster by hieraichical clustering.
+Default are set to "average". Alternatively, "complete" may get a diferent view of result, which you should try. It Can be set as any method supported by hclust.}
 
 \item{scale}{Logical value, whether to scale your input data. Default: TRUE.}
 

@@ -22,6 +22,7 @@ An toolkit for consensus clustering with multi-clustering algorithms.
 
 5. TBD
 
+Details for future development plans can be viewed at https://github.com/FanqianYin/omicstoolkits/Features_under_developing.html.
 
 ## Install package
 
