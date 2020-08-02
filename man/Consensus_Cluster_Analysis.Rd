@@ -2,6 +2,8 @@
 % Please edit documentation in R/Consensus_Cluster_Analysis.R
 \name{Consensus_Cluster_Analysis}
 \alias{Consensus_Cluster_Analysis}
+\alias{clustering.methods}
+\alias{Consensus_Cluster_conMethod}
 \title{Consensus_Cluster_Analysis}
 \usage{
 Consensus_Cluster_Analysis(
@@ -9,13 +11,16 @@ Consensus_Cluster_Analysis(
   k,
   methods = "ALL",
   dist.method = "euclidean",
-  methods.consensus = "complete",
+  consensus.method = "complete",
   scale = TRUE,
-  plot.cluster.pca = FALSE,
   saveplot = FALSE,
   plot.dir.suffix = NULL,
   ConsensusClusterPlus.reps = 100
 )
+
+clustering.methods()
+
+Consensus_Cluster_conMethod(res.con, consensus.method)
 }
 \arguments{
 \item{Exp}{data.frame or matrix with rownames represent samples, colnames represent features like proteins or genes.}
@@ -26,30 +31,42 @@ Consensus_Cluster_Analysis(
 
 \item{dist.method}{Method for calculating dissimilarity. Default "euclidean", can be any methods supported by dist()}
 
-\item{methods.consensus}{Method used for the final consensus cluster by hieraichical clustering. Default are set to "average".}
+\item{consensus.method}{Method used for the final consensus cluster by hieraichical clustering. Default are set to "average".}
 
 \item{scale}{Logical value, whether to scale your input data. Default: TRUE.}
-
-\item{plot.cluster.pca}{Logical value, whether to plot pca of every clustering results. Default: FALSE.}
 
 \item{saveplot}{under developing}
 
 \item{plot.dir.suffix}{under developing}
 
 \item{ConsensusClusterPlus.reps}{Integer value, used by consensusClusterPlus.}
+
+\item{res.con}{result of \code{Consensus_Cluster_Analysis()}.}
 }
 \value{
-List contain all cluster results. Also return consensus cluster heatmap and PCA plot indicating the consensus cluster result.
+\code{Consensus_Cluster_Analysis} returns res.con--one list contains all cluster results.
+
+\code{clustering.methods} returns all supported clutersing algorithms.
+
+\code{Consensus_Cluster_conMethod} returns one new res.con with the new consensus.method.
 }
 \description{
 Consensus clustering result of multi-clustering algorithms.
 }
+\details{
+Consensus clustering result of multi-clustering algorithms.
+}
 \examples{
-consensus_clusters <- Consensus_Cluster_Analysis(iris[-5], 3, methods = "ALL")
+#Use ALL supported clustering methods
+res.con <- Consensus_Cluster_Analysis(iris[-5], 3, methods = "ALL")
+#Use a subset of clustering methods. Note: not avaliable now.
+#Under development: res.con <- Consensus_Cluster_Analysis(iris[-5], 3, methods = c("kmeans", "pam"))
+
 #plot result:
-plot_consensus_clusters.heatmap(consensus_clusters)
-plot_consensus_clusters.pca(consensus_clusters)
+plot_res.con.heatmap(res.con)
+plot_res.con.pca(res.con)
 
-consensus_clusters <- Consensus_Cluster_Analysis(iris[-5], 3, methods = c("kmeans", "pam"))
-
+#list all supported clustering algorithms:
+clustering.methods()
+all.methods <- unlist(clustering.methods)
 }

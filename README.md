@@ -6,7 +6,9 @@ This is an integrated toolkits focusing on data analysis of omics data like tran
 Under development...
 
 ## Main toolkits
-1. Consensus_Cluster_Analysis(): an toolkit for consensus clustering with multi-clustering algorithms.
+
+### Consensus_Cluster_Analysis() 
+An toolkit for consensus clustering with multi-clustering algorithms.
 
 ## Under development
 
@@ -23,17 +25,17 @@ Under development...
 
 ## Install package
 
+```{r}
 install.packages("devtools")
-
 devtools::install_github("FanqianYin/omicstoolkits")
-
+```
 ## Contact
 
 If you encounter any problem, don't hesitate to cantact me: fanqianyin@gmail.com or yinfanqian@mail.kiz.ac.cn.
 
 Or report bugs at: https://github.com/FanqianYin/omicstoolkits/issues.
 
-Suggestion: If you have any adivce on these tools, please let me know;
+Suggestion: If you have   any adivce on these tools, please let me know;
 
 Collaboration: If you are interested in integrating these omicstoolkits, welcome to cooperate.
 
@@ -43,6 +45,12 @@ Collaboration: If you are interested in integrating these omicstoolkits, welcome
 
 ## Version history
 
-**Current version**: v0.1.0
+**Current version: v0.1.1**
 
-1. v0.1.0  7/30/2020  Consensus_Cluster_Analysis toolkit
+v0.1.1  8/2/2020
+
+Consensus_Cluster_Analysis toolkit: Add plot_consensus_clusters.heatmap(), plot_consensus_clusters.pca(), plot_cluster_algorithms.pca(), plot_cluster.pca(), for visulaztion result of Consensus_Cluster_Analysis().
+    
+v0.1.0  7/30/2020
+
+Consensus_Cluster_Analysis toolkit: First release.

@@ -1,6 +1,6 @@
 Package: omicstoolkits
 Title: Integrated bioinformatics toolkits for quantitative omics data analysis
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Fanqian",
            family = "Yin",
