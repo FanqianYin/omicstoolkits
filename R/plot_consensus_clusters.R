@@ -43,7 +43,7 @@ plot_consensus_cluster.heatmap <- function(res.con, clustering_method_columns = 
             clustering_method_columns = clustering_method_columns,
             clustering_method_rows = clustering_method_rows, name="clusters", row_title = "samples", column_title = "clutering algorithms",
             row_split = res.con$k)+
-      Heatmap(as.character(res.con$consensus_cluster), col = structure(RColorBrewer::brewer.pal(n = res.con$k, name = "Set1"), names = as.character(1:res.con$k)))
+      Heatmap(as.character(res.con$consensus_cluster), name = "Consensus cluster", col = structure(RColorBrewer::brewer.pal(n = res.con$k, name = "Set1"), names = as.character(1:res.con$k)))
   }else {#k > 9, use random colors()
     Heatmap(res.con[["cluster_matrix"]],
             col = 1:res.con$k,
@@ -51,7 +51,7 @@ plot_consensus_cluster.heatmap <- function(res.con, clustering_method_columns = 
             clustering_method_columns = "ward.D2",
             clustering_method_rows = "average", name="clusters", row_title = "samples", column_title = "clutering algorithms",
             row_split = res.con$k)+
-      rowAnnotation(df = data.frame("consensus_cluster" = as.character(res.con$consensus_cluster)))
+      rowAnnotation(df = data.frame("Consensus_cluster" = as.character(res.con$consensus_cluster)))
   }
 
 }

@@ -19,9 +19,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 4. Time serie anaylsis
 
+5. Data pre-processing
+   missing value (filtering, imputation)
+   data normalization
+   remove batch effect
+   
+6. Bio-marker analysis
+
 ## Consensus differential expression analysis
 
 1. Support subset of clustering methods
-2. add more clustering algorithms
+2. add more clustering algorithms: SOM, NMF, 
 3. clusters alignment (cluster label result from different methods are consistent).
 4. Complement of consensus cluster result, like dbscan...
+5. Relationship between clusters and phenotype data. Correlation, Fisher exact test...

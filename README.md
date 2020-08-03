@@ -10,6 +10,9 @@ Under development...
 ### Consensus_Cluster_Analysis() 
 An toolkit for consensus clustering with multi-clustering algorithms.
 
+Currently supported clustering methods: 
+
+hc_ward.D, hc_ward.D2, hc_single, hc_complete, hc_average, hc_mcquitty, hc_median, hc_centroid, hc_diana, kmeans, pam, fanny, hkmeans, Mclust, dbscan, con_kmeans, con_pam, con_hc_ward.D2, con_hc_complete, con_hc_average.
 ## Under development
 
 1. Consensus differential expression analysis
