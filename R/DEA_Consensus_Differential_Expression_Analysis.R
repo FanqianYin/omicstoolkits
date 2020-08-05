@@ -31,3 +31,5 @@ DEA_ANOVA <- function(){
 # To be dev: nonparametric alternatives:
 # Mann–Whitney U.test for unpaired Student’s t‑test; Wilcoxon signed‑rank testforpaired Student’s t‑test ,Kruskal–Wallis test as the nonparametric equivalent
 # of ANOVA; the Friedman’s test as the counterpart of repeated measures ANOVA.
+
+#todo before perform any test, the normalty and homogeneity of variance should be checked. If not pass, no test will be performed until it pass.
