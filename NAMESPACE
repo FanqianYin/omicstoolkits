@@ -2,6 +2,7 @@
 
 export(Consensus_Cluster_Analysis)
 export(Consensus_Cluster_conMethod)
+export(DEA_ANOVA)
 export(cluster_number)
 export(clustering.methods)
 export(plot_cluster.pca)

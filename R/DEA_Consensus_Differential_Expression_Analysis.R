@@ -3,16 +3,19 @@
 
 #Consensus Differential Expression analysis
 #' Consensus_Differential_Expression
-#'
+#' @aliases DEA_ANOVA
 #' @param Exp data.frame or matrix with rownames represent samples, colnames represent features like proteins or genes.
 #' @param groups Charactor or factor vector indicates group information. In two-way anova, groups are a data.frame, each column indicate one group factor.
 #' @param adj.method
 #' @param type "one-way" or "two-way" anova.
-#' @return One list including all results of Differential Expression analysis
-#'
+#' @return
+#' \code{Consensus_Differential_Expression}
+#' One list including all results of Differential Expression analysis
+#' \code{DEA_ANOVA}
+#' Anova result with pairwised comparation.
 #'
 #' @examples
-#'
+#' res.anova <- DEA_ANOVA(iris[-5], groups = iris$Species)
 Consensus_Differential_Expression <- function(Exp, groups, adj.method = "BH"){
 
 }
@@ -22,6 +25,7 @@ DEA_t.test <- function(Exp, groups, adj.method = "BH"){
 
 }
 
+#' @export
 #one-way analysis of variance (ANOVA), parametric, >2 groups.
 DEA_ANOVA <- function(Exp, groups, type = "one-way", adj.method = "BH", fearture.name = "gene", center.fun = "mean"){
   Exp <- as.data.frame(Exp)
@@ -43,6 +47,7 @@ DEA_ANOVA <- function(Exp, groups, type = "one-way", adj.method = "BH", fearture
     }
     res.df <- data.frame(fearture.name = cn, res.df)
     colnames(res.df) <- c(fearture.name, "p", rnames) #finish calcluating multi-p values
+    res.df <- res.df %>% mutate("p.adj" = p.adjust(p, method = adj.method)) %>% select(1,2,ncol(.), everything())
     #add other descriptive statistics
     res.fc <- calculate_FC(Exp, groups, fun = center.fun, fearture.name = fearture.name)
     res.df <- dplyr::left_join(res.df, res.fc)
