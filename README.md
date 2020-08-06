@@ -25,13 +25,18 @@ hc_ward.D, hc_ward.D2, hc_single, hc_complete, hc_average, hc_mcquitty, hc_media
 
 5. TBD
 
-Details for future development plans can be viewed at https://github.com/FanqianYin/omicstoolkits/Features_under_developing.html.
+Details for future development plans can be viewed at https://github.com/FanqianYin/omicstoolkits/Features_under_developing.Rmd.
 
 ## Install package
-
+You can install the source package throuhg:
 ```{r}
 install.packages("devtools")
 devtools::install_github("FanqianYin/omicstoolkits")
+```
+Or the latest development version:
+```{r}
+install.packages("devtools")
+devtools::install_github("FanqianYin/omicstoolkits-dev")
 ```
 ## Contact
 
@@ -44,6 +49,8 @@ Suggestion: If you have   any adivce on these tools, please let me know;
 Collaboration: If you are interested in integrating these omicstoolkits, welcome to cooperate.
 
 ## Development history
+
+Under development: Differential expression analysis or haiyou
 
 7/30/2020  Consensus_Cluster_Analysis: an toolkit focus on sample-based subtyping by using consensus clustering result of multi-clustering algorithms.
 
