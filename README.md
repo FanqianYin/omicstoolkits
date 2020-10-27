@@ -23,7 +23,9 @@ hc_ward.D, hc_ward.D2, hc_single, hc_complete, hc_average, hc_mcquitty, hc_media
 
 4. Time serie anaylsis
 
-5. TBD
+5. data normalization
+
+6. TBD
 
 Details for future development plans can be viewed at https://github.com/FanqianYin/omicstoolkits/Features_under_developing.Rmd.
 
@@ -50,13 +52,17 @@ Collaboration: If you are interested in integrating these omicstoolkits, welcome
 
 ## Development history
 
-Under development: Differential expression analysis or haiyou
+Under development: Differential expression analysis, data normalization
 
 7/30/2020  Consensus_Cluster_Analysis: an toolkit focus on sample-based subtyping by using consensus clustering result of multi-clustering algorithms.
 
 ## Version history
 
-**Current version: v0.1.1**
+**Current version: v0.1.2**
+
+v0.1.2  10/27/2020
+
+Add methods for QC-based or QC-free data normalization (could be used at metabolomic or proteomic data, or other similar dataset) 
 
 v0.1.1  8/2/2020
 
