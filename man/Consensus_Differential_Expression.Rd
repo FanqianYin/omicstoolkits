@@ -6,7 +6,14 @@
 \alias{DEA_ANOVA}
 \title{Consensus_Differential_Expression}
 \usage{
-Consensus_Differential_Expression(Exp, groups, adj.method = "BH")
+Consensus_Differential_Expression(
+  Exp,
+  groups,
+  methods = "ALL",
+  adj.method = "BH",
+  fearture.name = "gene",
+  center.fun = "mean"
+)
 }
 \arguments{
 \item{Exp}{data.frame or matrix with rownames represent samples, colnames represent features like proteins or genes.}
@@ -26,4 +33,5 @@ Consensus_Differential_Expression
 }
 \examples{
 res.anova <- DEA_ANOVA(iris[-5], groups = iris$Species)
+res.ttest <- DEA_t.test(exp, groups)
 }
