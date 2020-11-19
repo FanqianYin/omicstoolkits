@@ -13,19 +13,19 @@ normalize_data_visualization <- function(exp, pdata, plot, order = "fix", type =
   if (order == "fix") df.longer$sample <- factor(df.longer$sample, levels = pdata$sample)
 
   if (plot == "boxplot") {
-    p1 <- ggplot(df.longer, aes(x=sample, y=expression, fill = time))+geom_boxplot()+
+    p1 <- ggplot(df.longer, aes(x=sample, y=expression, fill = class))+geom_boxplot()+
       theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=0.3))
-    p2 <- ggplot(filter(df.longer,time=="QC"), aes(x=sample, y=expression, fill = time))+geom_boxplot()+
+    p2 <- ggplot(filter(df.longer,class=="QC"), aes(x=sample, y=expression, fill = class))+geom_boxplot()+
       theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=0.3))
     if (type == "onlyQC") {p <- p2} else {p <- p1}
 
   }else if(plot == "RSD"){
     exp.rsd <- calculate_RSD(exp, pdata)
     exp.rsd.longer <- pivot_longer(exp.rsd, -1, names_to = "group", values_to = "RSD")
-    p <- ggplot(exp.rsd.longer, aes(group, RSD, fill=group))+geom_boxplot()
+    p <- ggplot(exp.rsd.longer, aes(group, RSD, fill=group))+geom_boxplot(outlier.shape = NA)+ylim(c(1,100))
   }else if(plot == "PCA"){
-    pca <- PCA(log2(exp+1), graph = F)
-    p <- fviz_pca_ind(pca, geom = "point", habillage = as.factor(pdata$time))
+    pca <- FactoMineR::PCA(log2(exp+1), graph = F)
+    p <- fviz_pca_ind(pca, geom = "point", habillage = as.factor(pdata$class))
   }else if(plot == "traj"){
     #exp <- exp.neg
     #pdata <- pdata.neg
@@ -36,7 +36,7 @@ normalize_data_visualization <- function(exp, pdata, plot, order = "fix", type =
     exp.df <- as.data.frame(exp)
     metabolite.index <- exp.rsd[["variable"]][round(nrow(exp.rsd)*traj.single.metabo.RSD.quantile,0)]
 
-    plot.df <- data.frame(pdata, metabolite = exp.df[metabolite.index]) %>% mutate("color.group" = str_detect(time,"QC"))
+    plot.df <- data.frame(pdata, metabolite = exp.df[metabolite.index]) %>% mutate("color.group" = str_detect(class,"QC"))
     colnames(plot.df)[ncol(pdata)+1] <- "metabolite"
     plot.df$color.group[plot.df$color.group == T] <- "QC"
     plot.df$color.group[plot.df$color.group == F] <- "sample"
@@ -52,4 +52,19 @@ normalize_data_visualization <- function(exp, pdata, plot, order = "fix", type =
   }
 
   return(p)
+}
+
+#example
+#
+
+calculate_RSD <- function(exp, pdata){
+  groups <- unique(pdata$class)
+  RSD.df <- data.frame("variable" = colnames(exp))
+  for (g in groups) {
+    exp.group <- exp[pdata$class==g,]
+    RSD.group <- apply(exp.group, 2, function(x) sd(x)/mean(x)*100)
+    RSD.df <- cbind(RSD.df, RSD.group)
+  }
+  colnames(RSD.df) <- c("variable", groups)
+  return(RSD.df)
 }
