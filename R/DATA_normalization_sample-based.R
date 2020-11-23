@@ -4,8 +4,19 @@
 # data: sample as columan, metabolites as rows
 # chose method as one of: tic, mean, median, range, mad, MSTUS, IS (internal standard).
 # design: sample information including case/control, QC samples, run battch, time point, or other classffication.
-normalize_sample_based <- function(data, design, method, keep.unit = FALSE, na=0){
-  if (keep.unit == FALSE) {
+#' Sample-based normalization
+#' Normalise data by sample-based scaling factor, like sum or mean of sample.
+#' @param expData data.frame: row as sample, colum as metabolite(or features/variables)
+#' @param design data.frame, including 4 columns: "sample", "batch", "class", "order" (run order). QC sample as "QC" in column "class".
+#' @param method including: "tic", "median", "mean", "range", "mad", "MSTUS".
+#' @param na only take 0 as missing value, not NA.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+normalize_sample_based <- function(expData, design, method, na=0){
+  data <- t(expData)
     if (method == "tic") {
       data.norm <- apply(data, 2, function(x) x/sum(x))
     }else if (method == "mean") {
@@ -25,8 +36,6 @@ normalize_sample_based <- function(data, design, method, keep.unit = FALSE, na=0
       data.norm <- apply(data, 2, function(x) x/tail(x))
       data.norm <- data.norm[1:(nrow(data.norm)-1),]
     }
-
-  }
 
   return(data.norm)
 }

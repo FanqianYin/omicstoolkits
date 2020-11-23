@@ -1,4 +1,4 @@
-# variable-specific normalization (QC-based signal correction, )
+# variable-specific normalization (QC-based signal correction)
 
 # data as data.frame: row as sample, colum as metabolite(or features/variables)
 # method: qc.mean, qc.median, loess (QCRLSC), random forest (QCRFSC), QC-SVR
@@ -7,6 +7,20 @@
 #                    MED: for each metabolite, divide its value by the median across the experimental samples (classs).
 #                    QCRFSC or QCRLSC from statTarget.
 # design: including 4 columns: "sample", "batch", "class", "order" (run order). QC sample as "QC" in column "class".
+#' variable-specific normalization (QC-based signal correction)
+#'
+#' @param expData data.frame: row as sample, colum as metabolite(or features/variables)
+#' @param design data.frame, including 4 columns: "sample", "batch", "class", "order" (run order). QC sample as "QC" in column "class".
+#' @param method QC-based signal correction methods, including: qc.mean, qc.median, loess (QCRLSC), random forest (QCRFSC), QC-SVR, IORLSC, IORFSC
+#' @param rf.ntree ntree par for randomForest::randomForest()
+#' @param loess.span span par for loess()
+#' @param loess.degree degree par for loess()
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
 normalize_metabolite_specific <- function(expData, design, method,
                                           rf.ntree = 500, loess.span = 0.5, loess.degree = 2,
                                           ...){
@@ -86,45 +100,45 @@ normalize_metabolite_specific <- function(expData, design, method,
 }
 
 
-
+#' @export
 #QCRFSC, QCRLSC from statTarget
-# data as data.frame: row as sample, colum as metabolite(or features/variables); must contains row.names as feature names
+# expData as data.frame: row as sample, colum as metabolite(or features/variables); must contains row.names as feature names
 #method.QC are one of: "QCRFSC" or "QCRLSC"
 #design including 4 columns: sample, batch, class, order (run order)
-normalization_QCRFSC_statTarget <- function(data, design, method.QC, impute.method = "KNN", ...){
+normalization_QCRFSC_statTarget <- function(expData, design, method.QC, impute.method = "KNN", ...){
   #require(statTarget)
   #require(tidyverse)
   print("Using statTarget for QC-based normalization")
   #create temporary working dir
   dir.temp <- "./tempDir_statTarget"
-  #dir.tempInput <- "./tempDir_statTarget/inputdata"
+  #dir.tempInput <- "./tempDir_statTarget/inputexpData"
   dir.create(dir.temp)
-  dir.create("./tempDir_statTarget/inputdata")
-  #write formated input data to ./tempDir_statTarget/inputdata
+  dir.create("./tempDir_statTarget/inputexpData")
+  #write formated input expData to ./tempDir_statTarget/inputexpData
   #design$class[] <- stringr::str_replace_all(design$class, "QC", "NA")
   design$class[design$class=="QC"] <- NA
-  write.csv(design, file = "./tempDir_statTarget/inputdata/pdata.csv", row.names = FALSE, quote = FALSE)
-  #exp data
-  data.t <- data
-  data.t <- t(data.t)
-  data.t <- as.data.frame(data.t)
-  data.t <- cbind("name"=rownames(data.t),data.t)
-  write.csv(data.t, file = "./tempDir_statTarget/inputdata/exp.csv", row.names = FALSE, quote = FALSE)
+  write.csv(design, file = "./tempDir_statTarget/inputexpData/pexpData.csv", row.names = FALSE, quote = FALSE)
+  #exp expData
+  expData.t <- expData
+  expData.t <- t(expData.t)
+  expData.t <- as.expData.frame(expData.t)
+  expData.t <- cbind("name"=rownames(expData.t),expData.t)
+  write.csv(expData.t, file = "./tempDir_statTarget/inputexpData/exp.csv", row.names = FALSE, quote = FALSE)
   #statTarget::shiftCor
-  samPeno <- "./inputdata/pdata.csv"
-  samFile <- "./inputdata/exp.csv"
+  samPeno <- "./inputexpData/pexpData.csv"
+  samFile <- "./inputexpData/exp.csv"
   setwd(dir.temp)
   statTarget::shiftCor(samPeno,samFile, MLmethod = method.QC, imputeM = impute.method, ...)
   #read result
   #"statTarget/shiftCor/After_shiftCor/shift_all_cor.csv"
-  result.data <- read.csv("./statTarget/shiftCor/After_shiftCor/shift_all_cor.csv")
-  rownames(result.data) <- result.data$sample
-  result.data <- result.data[-1:-2] #remove sample and class columns.
+  result.expData <- read.csv("./statTarget/shiftCor/After_shiftCor/shift_all_cor.csv")
+  rownames(result.expData) <- result.expData$sample
+  result.expData <- result.expData[-1:-2] #remove sample and class columns.
   #delete temp dir
   setwd("..")
   unlink(dir.temp, recursive = TRUE)
 
-  return(result.data)
+  return(result.expData)
 }
 
 

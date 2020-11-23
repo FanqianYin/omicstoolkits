@@ -1,6 +1,15 @@
 # Statistical parameters of data
 
 # second column of pdata are group information
+#' Title
+#'
+#' @param exp data.frame: row as sample, colum as metabolite(or features/variables)
+#' @param pdata data.frame: row-samples, column-phenotype variables or factors.
+#'
+#' @return data.frame includes RSD of every variable within pre-defined groups.
+#' @export
+#'
+#' @examples
 calculate_RSD <- function(exp, pdata){
   groups <- unique(pdata$class)
   RSD.df <- data.frame("variable" = colnames(exp))

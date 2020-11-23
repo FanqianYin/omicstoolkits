@@ -4,6 +4,7 @@
 \name{Consensus_Differential_Expression}
 \alias{Consensus_Differential_Expression}
 \alias{DEA_ANOVA}
+\alias{DEA_t.test}
 \title{Consensus_Differential_Expression}
 \usage{
 Consensus_Differential_Expression(

@@ -4,6 +4,7 @@
 #Consensus Differential Expression analysis
 #' Consensus_Differential_Expression
 #' @aliases DEA_ANOVA
+#' @aliases DEA_t.test
 #' @param Exp data.frame or matrix with rownames represent samples, colnames represent features like proteins or genes.
 #' @param groups Charactor or factor vector indicates group information. In two-way anova, groups are a data.frame, each column indicate one group factor.
 #' @param adj.method

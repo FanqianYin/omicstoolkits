@@ -2,15 +2,31 @@
 
 #exp, row as sample, column as varibles
 #plot: boxplot (all, QC), boxplot of RSD, PCA, traj: trajectory of single metabolite (all and QC: with or without high RSD.)
-normalize_data_visualization <- function(exp, pdata, plot, order = "fix", type = "default", variable.name = "variable",
-                                         expression.unit = "expression", traj.single.metabo.RSD.quantile = 0.1, log = T){
-  if (log==T) {
+#' Data normalization-visualization
+#' Using PCA, boxplot, trajectory of single variable to visulize data.
+#' @param exp data.frame: row as sample, colum as metabolite(or features/variables)
+#' @param pdata data.frame: row as sample, colum as phenotype data(or factors)
+#' @param plot type of plot, including: boxplot, RSD, PCA, traj
+#' @param order default=TRUE, fix the order of sample in the boxplot.
+#' @param type "default": display all samples or "onlyQC": only display QC samples in boxplot.
+#' @param variable.name
+#' @param expression.unit
+#' @param traj.single.metabo.RSD.quantile RSD quantile for drawing the RSD boxplot.
+#' @param log whether log2 transform the exp data.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+normalize_data_visualization <- function(exp, pdata, plot, order.fixed = TRUE, type = "default", variable.name = "variable",
+                                         expression.unit = "expression", traj.single.metabo.RSD.quantile = 0.1, log = TRUE){
+  if (log==TRUE) {
     df <- cbind(pdata, log2(exp))
-  }else if (log==F) {
+  }else if (log==FALSE) {
     df <- cbind(pdata, exp)
   }
   df.longer <- pivot_longer(df, -1:-ncol(pdata), names_to = variable.name, values_to = expression.unit)
-  if (order == "fix") df.longer$sample <- factor(df.longer$sample, levels = pdata$sample)
+  if (order.fixed == TRUE) df.longer$sample <- factor(df.longer$sample, levels = pdata$sample)
 
   if (plot == "boxplot") {
     p1 <- ggplot(df.longer, aes(x=sample, y=expression, fill = class))+geom_boxplot()+
