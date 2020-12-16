@@ -21,6 +21,7 @@
 #' @export
 #'
 #' @examples
+#'
 normalize_metabolite_specific <- function(expData, design, method,
                                           rf.ntree = 500, loess.span = 0.5, loess.degree = 2,
                                           ...){
@@ -121,7 +122,7 @@ normalization_QCRFSC_statTarget <- function(expData, design, method.QC, impute.m
   #exp expData
   expData.t <- expData
   expData.t <- t(expData.t)
-  expData.t <- as.expData.frame(expData.t)
+  expData.t <- as.data.frame(expData.t)
   expData.t <- cbind("name"=rownames(expData.t),expData.t)
   write.csv(expData.t, file = "./tempDir_statTarget/inputexpData/exp.csv", row.names = FALSE, quote = FALSE)
   #statTarget::shiftCor

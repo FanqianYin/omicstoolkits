@@ -11,7 +11,7 @@
 #' @param type "one-way" or "two-way" anova.
 #' @return
 #' \code{Consensus_Differential_Expression}
-#' One list including all results of Differential Expression analysis
+#' One list including all results of Differential Expression analysis \n
 #' \code{DEA_ANOVA}
 #' Anova result with pairwised comparation.
 #'
@@ -24,24 +24,25 @@ Consensus_Differential_Expression <- function(Exp, groups, methods = "ALL", adj.
 
 #' @export
 #t.test
-DEA_t.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene", center.fun = "mean"){
+DEA_t.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene", center.fun = "mean",
+                       keep.t = FALSE, log2.trans = TRUE){
   Exp <- as.matrix(Exp)
+  if(log2.trans == TRUE) Exp.log <- log2(Exp+1)
   res.df <- data.frame("variale" = colnames(Exp))
 
-  p.value <- apply(Exp, 2, function(x) {
+  p.value <- apply(Exp.log, 2, function(x) {
     #fo <- as.formula("x", " ~ ", "group")
-    t.test.result <- t.test(x[groups==levels(groups)[1]],x[groups==levels(groups)[2]])
-    p <- t.test.result$p.value
+    t.test.result <- t.test(x[groups==levels(groups)[1]], x[groups==levels(groups)[2]])
+    p <- c(t.test.result$p.value, t.test.result$statistic)
     return(p)
   })
-  p.value <- as.vector(p.value)
+  p.value <- as.data.frame(t(p.value))
+  if(keep.t == FALSE) p.value <- p.value[-2]
   res.df <- cbind(res.df,p.value)
-  colnames(res.df) <- c(fearture.name, "p")
+  colnames(res.df)[1:2] <- c(fearture.name, "p")
   #p.adjust
   res.df <- res.df %>% mutate("p.adj" = p.adjust(p, method = adj.method))
   #add other descriptive statistics
-
-
   res.fc <- calculate_FC(Exp, groups, group.number = 2, fun = center.fun, fearture.name = fearture.name)
   res.df <- dplyr::left_join(res.df, res.fc) %>% dplyr::arrange(p.adj)
   return(res.df)

@@ -2,7 +2,8 @@
 % Please edit documentation in R/DATA_normalization_visualization.R
 \name{normalize_data_visualization}
 \alias{normalize_data_visualization}
-\title{Title}
+\title{Data normalization-visualization
+Using PCA, boxplot, trajectory of single variable to visulize data.}
 \usage{
 normalize_data_visualization(
   exp,
@@ -35,5 +36,6 @@ normalize_data_visualization(
 
 }
 \description{
-Title
+Data normalization-visualization
+Using PCA, boxplot, trajectory of single variable to visulize data.
 }
