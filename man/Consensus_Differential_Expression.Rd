@@ -19,13 +19,13 @@ Consensus_Differential_Expression(
 \arguments{
 \item{Exp}{data.frame or matrix with rownames represent samples, colnames represent features like proteins or genes.}
 
-\item{groups}{Charactor or factor vector indicates group information. In two-way anova, groups are a data.frame, each column indicate one group factor.}
+\item{groups}{factor vector indicates group information. In two-way anova, groups are a data.frame, each column indicate one group factor.}
 
 \item{type}{"one-way" or "two-way" anova.}
 }
 \value{
 \code{Consensus_Differential_Expression}
-One list including all results of Differential Expression analysis
+One list including all results of Differential Expression analysis \n
 \code{DEA_ANOVA}
 Anova result with pairwised comparation.
 }

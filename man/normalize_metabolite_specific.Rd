@@ -35,3 +35,6 @@ normalize_metabolite_specific(
 \description{
 variable-specific normalization (QC-based signal correction)
 }
+\examples{
+
+}
