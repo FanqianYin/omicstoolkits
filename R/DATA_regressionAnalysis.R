@@ -22,16 +22,21 @@ DATA_lmregression <- function(pdata, exp, pr.variable, variable.cofounder = NULL
 
   if (length(resp.variable)==1) {
     for (v in 1:length(pr.variable)) {
-      fmla <- formula(paste0(resp.variable, "~", pr.variable[v], "+", fmla.pr.variable))
+	  if(!is.null(variable.cofounder)){ 
+        fmla <- formula(paste0(resp.variable, "~", pr.variable[v], "+", fmla.pr.variable))
+	  }else {
+	  fmla <- formula(paste0(resp.variable, "~", pr.variable[v]))
+	  }
       fit.summary <- summary(lm(fmla, df))
 
       cofounder.name <- rownames(fit.summary$coefficients)[-1]
       lm.res.colname <- c("varibale",paste(rep(cofounder.name,each=2),c("coef","p"),sep = "_"))
       lm.res[pr.variable[v]] <- c(pr.variable[v])
+	  if(nrow(fit.summary$coefficients)>=2) {
       for (vn in 1:(nrow(fit.summary$coefficients)-1)) {
         lm.res[[pr.variable[v]]] <- c(lm.res[[pr.variable[v]]],fit.summary$coefficients[vn+1,1],fit.summary$coefficients[vn+1,4])
-      }
-
+       }
+	  }
     }
   }
   #unlist the res to df
