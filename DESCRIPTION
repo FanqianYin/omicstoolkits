@@ -20,7 +20,8 @@ BugReports: https://github.com/FanqianYin/omicstoolkits/issues
 Imports:
     cowplot,
     RColorBrewer,
-    dendextend
+    dendextend,
+    stringr
 Depends:
     R (>= 4.0),
     tidyverse,
