@@ -32,6 +32,7 @@ DEA_t.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene", c
   }else {Exp.log <- Exp;Exp <- matrix(2^Exp,nrow = nrow(Exp));colnames(Exp) <- Exp.log;rownames(Exp) <- Exp.log}
   res.df <- data.frame("variable" = colnames(Exp))
 
+  ifelse(is.factor(groups),groups <- groups, groups <- as.factor(groups))
   p.value <- apply(Exp.log, 2, function(x) {
     #fo <- as.formula("x", " ~ ", "group")
     t.test.result <- t.test(x[groups==levels(groups)[1]], x[groups==levels(groups)[2]], paired = paired)
@@ -54,11 +55,14 @@ DEA_t.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene", c
 #' @export
 #Wilcoxon Rank Sum and Signed Rank Tests for nonparametric methods.
 DEA_wilcox.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene",
-                            center.fun = "mean",log2.trans = TRUE, paired = FALSE){
+                            center.fun = "mean",log2.trans = TRUE, paired = FALSE,keep.t=FALSE){
   Exp <- as.matrix(Exp)
-  if(log2.trans == TRUE) Exp.log <- log2(Exp+1)
-  res.df <- data.frame("variale" = colnames(Exp))
+  if(log2.trans == TRUE) {
+    Exp.log <- log2(Exp)
+  }else {Exp.log <- Exp;Exp <- matrix(2^Exp,nrow = nrow(Exp));colnames(Exp) <- Exp.log;rownames(Exp) <- Exp.log}
+  res.df <- data.frame("variable" = colnames(Exp))
 
+  ifelse(is.factor(groups),groups <- groups, groups <- as.factor(groups))
   p.value <- apply(Exp.log, 2, function(x) {
     #fo <- as.formula("x", " ~ ", "group")
     wilcox.test.result <- wilcox.test(x[groups==levels(groups)[1]], x[groups==levels(groups)[2]], paired = paired)
@@ -145,7 +149,7 @@ calculate_mean <- function(data, groups, fun = "mean", fearture.name = "gene"){
   res.means <- data.frame(fearture.name = colnames(data))
   #fun = "mean"
   if (fun == "mean") {
-    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(mean,rm.na=T)
+    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(mean,na.rm=T)
     name.groups <- as.character(res.descri$groups);name.groups <- paste0(fun, ".", name.groups)
     res.descri <- t(res.descri[-1]) #matrix, row as varibles(genes), column as result of group means
 
@@ -154,7 +158,7 @@ calculate_mean <- function(data, groups, fun = "mean", fearture.name = "gene"){
     return(res.means)
   }
   if (fun == "median") {
-    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(median,rm.na=T)
+    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(median,na.rm=T)
     name.groups <- as.character(res.descri$groups);name.groups <- paste0(fun, ".", name.groups)
     res.descri <- t(res.descri[-1]) #matrix, row as varibles(genes), column as result of group means
 
