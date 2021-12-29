@@ -29,9 +29,10 @@ DEA_t.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene", c
   Exp <- as.matrix(Exp)
   if(log2.trans == TRUE) {
     Exp.log <- log2(Exp)
-  }else Exp.log <- Exp
+  }else {Exp.log <- Exp;Exp <- matrix(2^Exp,nrow = nrow(Exp));colnames(Exp) <- Exp.log;rownames(Exp) <- Exp.log}
   res.df <- data.frame("variable" = colnames(Exp))
 
+  ifelse(is.factor(groups),groups <- groups, groups <- as.factor(groups))
   p.value <- apply(Exp.log, 2, function(x) {
     #fo <- as.formula("x", " ~ ", "group")
     t.test.result <- t.test(x[groups==levels(groups)[1]], x[groups==levels(groups)[2]], paired = paired)
@@ -54,11 +55,14 @@ DEA_t.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene", c
 #' @export
 #Wilcoxon Rank Sum and Signed Rank Tests for nonparametric methods.
 DEA_wilcox.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gene",
-                            center.fun = "mean",log2.trans = TRUE, paired = FALSE){
+                            center.fun = "mean",log2.trans = TRUE, paired = FALSE,keep.t=FALSE){
   Exp <- as.matrix(Exp)
-  if(log2.trans == TRUE) Exp.log <- log2(Exp+1)
-  res.df <- data.frame("variale" = colnames(Exp))
+  if(log2.trans == TRUE) {
+    Exp.log <- log2(Exp)
+  }else {Exp.log <- Exp;Exp <- matrix(2^Exp,nrow = nrow(Exp));colnames(Exp) <- Exp.log;rownames(Exp) <- Exp.log}
+  res.df <- data.frame("variable" = colnames(Exp))
 
+  ifelse(is.factor(groups),groups <- groups, groups <- as.factor(groups))
   p.value <- apply(Exp.log, 2, function(x) {
     #fo <- as.formula("x", " ~ ", "group")
     wilcox.test.result <- wilcox.test(x[groups==levels(groups)[1]], x[groups==levels(groups)[2]], paired = paired)
@@ -79,30 +83,44 @@ DEA_wilcox.test <- function(Exp, groups, adj.method = "BH", fearture.name = "gen
 
 #' @export
 #one-way analysis of variance (ANOVA), parametric, >2 groups.
-DEA_ANOVA <- function(Exp, groups, type = "one-way", group.number = 3, adj.method = "BH", fearture.name = "gene", center.fun = "mean"){
+DEA_ANOVA <- function(Exp, groups, type = "one-way", post.hoc.test=F, group.number = 3, adj.method = "BH", fearture.name = "gene", center.fun = "mean"){
   Exp <- as.data.frame(Exp)
   res.df <- data.frame()
   if (type == "one-way") {
-    cn <- colnames(Exp)
-    for (n in 1:ncol(Exp)) {
-      fo <- as.formula(paste0(cn[n], " ~ ", "groups"))
-      res.aov <- aov(fo, Exp)
-      p <- summary(res.aov)[[1]][["Pr(>F)"]][1]
+    if(post.hoc.test){
+      cn <- colnames(Exp)
+      for (n in 1:ncol(Exp)) {
+        fo <- as.formula(paste0(cn[n], " ~ ", "groups"))
+        res.aov <- aov(fo, Exp)
+        p <- summary(res.aov)[[1]][["Pr(>F)"]][1]
 
-      res.tukeyHSD <- TukeyHSD(res.aov)
-      if(n == 1) {rnames <- rownames(res.tukeyHSD[[1]]) #Only one run for creating comparation names list
+        res.tukeyHSD <- TukeyHSD(res.aov)
+        if(n == 1) {rnames <- rownames(res.tukeyHSD[[1]]) #Only one run for creating comparation names list
         rnames <- paste0("p.adj", "_", rnames)
         }
-      p.multi.compare <- res.tukeyHSD[[1]][,4] #pairwise comparation p value of groups. length are decided by the comparation.
+        p.multi.compare <- res.tukeyHSD[[1]][,4] #pairwise comparation p value of groups. length are decided by the comparation.
 
-      res.df <- rbind(res.df, c(p, p.multi.compare))
+        res.df <- rbind(res.df, c(p, p.multi.compare))
+      }
+      res.df <- data.frame(fearture.name = cn, res.df)
+      colnames(res.df) <- c(fearture.name, "p", rnames) #finish calcluating multi-p values
+      res.df <- res.df %>% mutate("p.adj" = p.adjust(p, method = adj.method)) %>% select(1,2,ncol(.), everything())
+      #add other descriptive statistics
+      res.fc <- calculate_FC(Exp, groups, fun = center.fun, fearture.name = fearture.name)
+      res.df <- dplyr::left_join(res.df, res.fc)
+
+    }else{
+      cn <- colnames(Exp)
+      for (n in 1:ncol(Exp)) {
+        fo <- as.formula(paste0(cn[n], " ~ ", "groups"))
+        res.aov <- aov(fo, Exp)
+        p <- summary(res.aov)[[1]][["Pr(>F)"]][1]
+        res.df <- rbind(res.df, p)
+      }
+      res.df <- data.frame(fearture.name = cn, res.df)
+      colnames(res.df) <- c(fearture.name, "p")
+      res.df <- res.df %>% mutate("p.adj" = p.adjust(p, method = adj.method))
     }
-    res.df <- data.frame(fearture.name = cn, res.df)
-    colnames(res.df) <- c(fearture.name, "p", rnames) #finish calcluating multi-p values
-    res.df <- res.df %>% mutate("p.adj" = p.adjust(p, method = adj.method)) %>% select(1,2,ncol(.), everything())
-    #add other descriptive statistics
-    res.fc <- calculate_FC(Exp, groups, fun = center.fun, fearture.name = fearture.name)
-    res.df <- dplyr::left_join(res.df, res.fc)
     return(res.df)
   }
 }
@@ -131,7 +149,7 @@ calculate_mean <- function(data, groups, fun = "mean", fearture.name = "gene"){
   res.means <- data.frame(fearture.name = colnames(data))
   #fun = "mean"
   if (fun == "mean") {
-    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(mean)
+    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(mean,na.rm=T)
     name.groups <- as.character(res.descri$groups);name.groups <- paste0(fun, ".", name.groups)
     res.descri <- t(res.descri[-1]) #matrix, row as varibles(genes), column as result of group means
 
@@ -140,7 +158,7 @@ calculate_mean <- function(data, groups, fun = "mean", fearture.name = "gene"){
     return(res.means)
   }
   if (fun == "median") {
-    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(median)
+    res.descri <- data.frame("groups" = groups, data) %>% group_by(groups) %>% summarise_all(median,na.rm=T)
     name.groups <- as.character(res.descri$groups);name.groups <- paste0(fun, ".", name.groups)
     res.descri <- t(res.descri[-1]) #matrix, row as varibles(genes), column as result of group means
 
